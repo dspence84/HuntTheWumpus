@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -7,6 +8,7 @@ import java.awt.Point;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -20,7 +22,7 @@ public class TextView extends JPanel implements Observer {
 	private Game game;
 	private String gameString;
 	
-	public TextView(Game game) {
+	public TextView(Game game) {		
 		this.game = game;
 		textView = new JTextArea();
 		textView.setEditable(false);

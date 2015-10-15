@@ -81,10 +81,8 @@ public class Game extends Observable {
 				if(map.whatIsHere(new Point(x, playerY)) == Obstacle.Wumpus) {
 					reason = GameOverReason.ArrowHitWumpus;
 					win = true;
-				}
-				else {
-					reason = GameOverReason.ArrowHitPlayer;
-				}
+					break;
+				}				
 			}
 		break;
 		case North:
@@ -93,15 +91,19 @@ public class Game extends Observable {
 				if(map.whatIsHere(new Point(playerX, y)) == Obstacle.Wumpus) {
 					reason = GameOverReason.ArrowHitWumpus;
 					win = true;
-				}
-				else {
-					reason = GameOverReason.ArrowHitPlayer;
+					break;
 				}
 			}
 		break;
 			
 		}
+		
+		if(win == false) {
+			reason = GameOverReason.ArrowHitHunter;
+		}
 		gameOver = true;
+		
+		checkRules();
 		return win;
 	}		
 	
@@ -111,6 +113,14 @@ public class Game extends Observable {
 	
 	public Obstacle whatIsHere(Point p) {
 		return map.whatIsHere(p);
+	}
+	
+	private void visitAll() {
+		for(int x = 0; x < gridSize; x++) {
+			for(int y = 0; y < gridSize; y++) {
+				visited[x][y] = true;
+			}
+		}
 	}
 	
 	private void checkRules() {
@@ -125,6 +135,10 @@ public class Game extends Observable {
 			reason = GameOverReason.Pit;
 			gameOver = true;
 			break;			
+		}
+		
+		if(gameOver == true) {
+			visitAll();
 		}
 		
 		GameMessage gm = new GameMessage(obstacle, this.gameOver, reason);
