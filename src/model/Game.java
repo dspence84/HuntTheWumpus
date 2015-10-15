@@ -23,6 +23,10 @@ public class Game extends Observable {
 		gameOver = false;
 	}
 	
+	public int getGridSize() {
+		return gridSize;
+	}
+	
 	public void movePlayer(Direction direction) {
 		if(gameOver == false) {
 			

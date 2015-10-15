@@ -26,7 +26,7 @@ import model.Obstacle;
 
 public class WumpusGUI extends JFrame implements Observer {
 	
-	private final int GRID_SIZE = 10;
+	private final int GRID_SIZE = 20;
 	private boolean[][] visited;
 	private Game game;
 	private TextView textPanel;
@@ -62,8 +62,13 @@ public class WumpusGUI extends JFrame implements Observer {
 		this.setLocation(50,50);
 
 		TextView textPanel = new TextView(game);	
+		
+		
+		ImageView imagePanel = new ImageView(game);
+		
 		game.addObserver(this);
 		game.addObserver(textPanel);
+		game.addObserver(imagePanel);
 				
 		this.controlPanel = new JPanel();
 		controlPanel.setLocation(15, 50);
@@ -86,10 +91,10 @@ public class WumpusGUI extends JFrame implements Observer {
 		controlPanel.add(controls);
 		
 		this.tabPane = new JTabbedPane();
-		tabPane.setLocation(300, 50);
-		tabPane.setSize(420, 396);
+		tabPane.setLocation(280, 30);
+		tabPane.setSize(420,400);
 		tabPane.setFocusable(false);
-		tabPane.addTab("Image View", new JPanel());
+		tabPane.addTab("Image View", imagePanel);
 		tabPane.addTab("Text View", textPanel);		
 		add(tabPane);
 		
@@ -159,7 +164,8 @@ public class WumpusGUI extends JFrame implements Observer {
 					break;
 					
 				case ArrowHitWumpus:
-					JOptionPane.showMessageDialog(null, "You hit the Wumpus and win the game!");
+					JOptionPane.showMessageDialog(null, "Your arrow flies true and hits the Wumpus right between the eyes."
+							+ "He falls over dead and the day is done.  Congratulations!");
 					break;
 					
 				case ArrowHitHunter:

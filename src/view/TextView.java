@@ -21,17 +21,24 @@ public class TextView extends JPanel implements Observer {
 	private JTextArea textView;
 	private Game game;
 	private String gameString;
+	private int gridSize;
+	private final double FONT_RATIO = (10.0 / 18.0);
 	
 	public TextView(Game game) {		
 		this.game = game;
+		gridSize = game.getGridSize();
 		textView = new JTextArea();
 		textView.setEditable(false);
 		textView.setFocusable(false);
 		
 		add(textView);
 		
-		textView.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+		textView.setFont(new Font(Font.MONOSPACED, Font.PLAIN, getFontSize()));
 		textView.setText(buildMap());
+	}
+	
+	private int getFontSize() {
+		return (int) (FONT_RATIO * gridSize); 
 	}
 	
 	@Override
