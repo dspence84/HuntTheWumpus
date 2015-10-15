@@ -22,7 +22,7 @@ public class TextView extends JPanel implements Observer {
 	private Game game;
 	private String gameString;
 	private int gridSize;
-	private final double FONT_RATIO = (10.0 / 18.0);
+	private final double FONT_RATIO = (21.5 * 10.0);
 	
 	public TextView(Game game) {		
 		this.game = game;
@@ -38,7 +38,7 @@ public class TextView extends JPanel implements Observer {
 	}
 	
 	private int getFontSize() {
-		return (int) (FONT_RATIO * gridSize); 
+		return (int) (FONT_RATIO / gridSize); 
 	}
 	
 	@Override
