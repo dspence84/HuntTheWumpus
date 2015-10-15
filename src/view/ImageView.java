@@ -63,10 +63,11 @@ public class ImageView extends JPanel implements Observer {
 		
 		// Draw background image 100 times
 		for (int y = panelSizeInPixels - 1; y >= 0; y -= gridSquareSizeInPixels())
-			for (int x = 0; x < panelSizeInPixels; x += gridSquareSizeInPixels())
+			for (int x = 0; x < panelSizeInPixels; x += gridSquareSizeInPixels()) {
 				//if(visited[pixelToGrid(x)][pixelToGrid(y)] == true)	
-					
+					g2.drawImage(tile,  x, y, gridSquareSizeInPixels(), gridSquareSizeInPixels(), null);
 					g2.drawImage(whichImage(pixelToGrid(x), pixelToGrid(y)), x, y, gridSquareSizeInPixels(), gridSquareSizeInPixels(), null);
+			}
 
 		//System.out.println(X + " " + Y);
 		//g2.drawImage(player, playerPosition.x, playerPosition.y, null);
