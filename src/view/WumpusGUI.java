@@ -26,7 +26,7 @@ import model.Obstacle;
 
 public class WumpusGUI extends JFrame implements Observer {
 	
-	private final int GRID_SIZE = 15;
+	private final int GRID_SIZE = 10;
 	private boolean[][] visited;
 	private Game game;
 	private TextView textPanel;
@@ -58,7 +58,7 @@ public class WumpusGUI extends JFrame implements Observer {
 	public void layoutGUI() {
 		
 		setLayout(null);
-		this.setSize(750,500);
+		this.setSize(1000,800);
 		this.setLocation(50,50);
 
 		TextView textPanel = new TextView(game);	
@@ -92,7 +92,7 @@ public class WumpusGUI extends JFrame implements Observer {
 		
 		this.tabPane = new JTabbedPane();
 		tabPane.setLocation(280, 30);
-		tabPane.setSize(420,400);
+		tabPane.setSize(700,700);
 		tabPane.setFocusable(false);
 		tabPane.addTab("Image View", imagePanel);
 		tabPane.addTab("Text View", textPanel);		
