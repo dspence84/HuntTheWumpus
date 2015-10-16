@@ -48,7 +48,7 @@ public class ImageView extends JPanel implements Observer {
 		}
 		
 		gridSize = game.getGridSize();
-		panelSizeInPixels = 360;
+		panelSizeInPixels = 320;
 		
 		
 		repaint();
@@ -74,7 +74,7 @@ public class ImageView extends JPanel implements Observer {
 	}
 	
 	private int gridSquareSizeInPixels() {
-		return panelSizeInPixels / (gridSize);
+		return (int) Math.ceil( (double) panelSizeInPixels / gridSize);
 	}
 	
 	private int pixelToGrid(int pixel) {
