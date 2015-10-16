@@ -3,16 +3,22 @@ package view;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.TextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
@@ -28,11 +34,15 @@ public class WumpusGUI extends JFrame implements Observer {
 	
 	private final int GRID_SIZE = 30;
 	private boolean[][] visited;
-	private Game game;
-	private TextView textPanel;
+	private Game game;	
 	private JTabbedPane tabPane;
 	private JPanel controlPanel;
 	private JTextArea controls;
+	private JRadioButton easy;
+	private JRadioButton medium;
+	private JRadioButton hard;
+	private TextView textPanel;	
+	private ImageView imagePanel;
 	
 	public static void main(String[] args) {
 		new WumpusGUI().setVisible(true);
@@ -53,6 +63,15 @@ public class WumpusGUI extends JFrame implements Observer {
 		GameMapFactory mf = new GameMapFactory(new Obstacle[GRID_SIZE][GRID_SIZE], new Random(), GRID_SIZE, 10, 13);
 		mf.setupMap();
 		game = new Game(GRID_SIZE, mf.getGameMap(), visited, mf.getHunterPosition());
+		
+		textPanel = new TextView(game);	
+		imagePanel = new ImageView(game);
+		
+		game.addObserver(this);
+		game.addObserver(textPanel);
+		game.addObserver(imagePanel);
+		
+		
 	}
 	
 	public void layoutGUI() {
@@ -61,20 +80,20 @@ public class WumpusGUI extends JFrame implements Observer {
 		this.setSize(1000,800);
 		this.setLocation(50,50);
 
+		/*
 		TextView textPanel = new TextView(game);	
-		
-		
 		ImageView imagePanel = new ImageView(game);
-		imagePanel.setSize(600,600);
 		
 		game.addObserver(this);
 		game.addObserver(textPanel);
 		game.addObserver(imagePanel);
+			*/
 				
 		this.controlPanel = new JPanel();
 		controlPanel.setLocation(15, 50);
-		controlPanel.setSize(250, 200);
-		//controlPanel.setBackground(Color.BLACK);
+		controlPanel.setSize(250, 400);
+		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
+		
 		add(controlPanel);
 		
 		this.controls = new JTextArea();
@@ -90,6 +109,40 @@ public class WumpusGUI extends JFrame implements Observer {
 				       + "A:\tShoot Arrow West\n"
 				       + "D:\tShoot Arrow East");
 		controlPanel.add(controls);
+		
+		easy = new JRadioButton("Easy");
+		easy.setFocusable(false);
+		
+		medium = new JRadioButton("Medium");
+		medium.setFocusable(false);
+		
+		hard = new JRadioButton("Hard");
+		hard.setFocusable(false);
+		
+		ButtonGroup group = new ButtonGroup();
+		JButton reset = new JButton("Reset");
+		reset.setFocusable(false);
+		
+		ButtonGroup bg = new ButtonGroup();
+		
+		reset.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				resetGame();
+				
+			}
+			
+		});
+		
+		bg.add(easy);
+		bg.add(medium);
+		bg.add(hard);
+		
+		controlPanel.add(easy);
+		controlPanel.add(medium);
+		controlPanel.add(hard);
+		controlPanel.add(reset);
 		
 		this.tabPane = new JTabbedPane();
 		tabPane.setLocation(280, 30);
