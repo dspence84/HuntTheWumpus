@@ -32,7 +32,9 @@ import model.Obstacle;
 
 public class WumpusGUI extends JFrame implements Observer {
 	
-	private final int GRID_SIZE = 15;
+	private int GRID_SIZE = 10;
+	private int lbPits = 3;
+	private int ubPits = 5;
 	private boolean[][] visited;
 	private Game game;	
 	private JTabbedPane tabPane;
@@ -54,6 +56,9 @@ public class WumpusGUI extends JFrame implements Observer {
 
 		visited = new boolean[GRID_SIZE][GRID_SIZE];
 		
+		GameMapFactory mf = new GameMapFactory(new Obstacle[GRID_SIZE][GRID_SIZE], new Random(), GRID_SIZE, lbPits, ubPits);
+		mf.setupMap();
+		game = new Game(GRID_SIZE, mf.getGameMap(), visited, mf.getHunterPosition());
 		resetGame();
 		registerListeners();
 		layoutGUI();
@@ -62,17 +67,11 @@ public class WumpusGUI extends JFrame implements Observer {
 	}
 	
 	private void resetGame() {
-		GameMapFactory mf = new GameMapFactory(new Obstacle[GRID_SIZE][GRID_SIZE], new Random(), GRID_SIZE, 10, 13);
+		
+		visited = new boolean[GRID_SIZE][GRID_SIZE];
+		GameMapFactory mf = new GameMapFactory(new Obstacle[GRID_SIZE][GRID_SIZE], new Random(), GRID_SIZE, lbPits, ubPits);
 		mf.setupMap();
-		game = new Game(GRID_SIZE, mf.getGameMap(), visited, mf.getHunterPosition());
-		
-		textPanel = new TextView(game);	
-		imagePanel = new ImageView(game);
-		
-		game.addObserver(this);
-		game.addObserver(textPanel);
-		game.addObserver(imagePanel);
-		
+		game.resetGame(GRID_SIZE, mf.getGameMap(), visited, mf.getHunterPosition());
 		
 	}
 	
@@ -85,16 +84,16 @@ public class WumpusGUI extends JFrame implements Observer {
 		
 		statusLabel = new JLabel();
 		statusLabel.setLocation(15, 500);
-		statusLabel.setSize(100, 20);
+		statusLabel.setSize(300, 20);
 		add(statusLabel);
-		/*
+	
 		TextView textPanel = new TextView(game);	
 		ImageView imagePanel = new ImageView(game);
 		
 		game.addObserver(this);
 		game.addObserver(textPanel);
 		game.addObserver(imagePanel);
-			*/
+	
 				
 		this.controlPanel = new JPanel();
 		controlPanel.setLocation(15, 50);
