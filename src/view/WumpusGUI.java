@@ -59,14 +59,35 @@ public class WumpusGUI extends JFrame implements Observer {
 		GameMapFactory mf = new GameMapFactory(new Obstacle[GRID_SIZE][GRID_SIZE], new Random(), GRID_SIZE, lbPits, ubPits);
 		mf.setupMap();
 		game = new Game(GRID_SIZE, mf.getGameMap(), visited, mf.getHunterPosition());
+		layoutGUI();
 		resetGame();
 		registerListeners();
-		layoutGUI();
+		
 
 		
 	}
 	
 	private void resetGame() {
+		
+		if(easy.isSelected()) {
+			GRID_SIZE = 10;
+			lbPits = 3;
+			ubPits = 5;			
+		} else if(medium.isSelected()) {
+			GRID_SIZE = 15;
+			lbPits = 8;
+			ubPits = 12;
+		} else if(hard.isSelected()) {
+			GRID_SIZE = 20;
+			lbPits = 15;
+			ubPits = 20;
+		} else {
+			GRID_SIZE = 10;
+			lbPits = 3;
+			ubPits = 5;
+		}
+		
+		
 		
 		visited = new boolean[GRID_SIZE][GRID_SIZE];
 		GameMapFactory mf = new GameMapFactory(new Obstacle[GRID_SIZE][GRID_SIZE], new Random(), GRID_SIZE, lbPits, ubPits);
@@ -140,6 +161,8 @@ public class WumpusGUI extends JFrame implements Observer {
 			}
 			
 		});
+		
+		easy.setSelected(true);
 		
 		bg.add(easy);
 		bg.add(medium);

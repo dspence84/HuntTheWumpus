@@ -14,6 +14,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import model.Game;
+import model.GameMessage;
+import model.GameOverReason;
 import model.Obstacle;
 
 public class ImageView extends JPanel implements Observer {
@@ -122,7 +124,11 @@ public class ImageView extends JPanel implements Observer {
 	}
 	
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update(Observable game, Object gameMessage) {
+		GameMessage gm = (GameMessage) gameMessage;
+		if(gm.getGameOverReason() == GameOverReason.Reset) {
+			gridSize = ((Game) game).getGridSize();
+		}
 		repaint();
 		
 	}

@@ -75,13 +75,14 @@ public class Game extends Observable {
 		this.newPlayerPosition = hunterStartingPosition;
 		
 		visited[hunterStartingPosition.x][hunterStartingPosition.y] = true;
-		gameOver = false;	
+		gameOver = false;
 		
-		GameMessage gm = new GameMessage(Obstacle.Empty, this.gameOver, reason);
+		GameMessage gm = new GameMessage(Obstacle.Empty, this.gameOver, GameOverReason.Reset);
 		setChanged();
 		notifyObservers(gm);
 		
 	}
+	
 
 	public Point getPlayerPosition() {
 		return newPlayerPosition;

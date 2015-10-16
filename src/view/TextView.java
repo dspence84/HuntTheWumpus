@@ -14,6 +14,7 @@ import javax.swing.JTextArea;
 
 import model.Game;
 import model.GameMessage;
+import model.GameOverReason;
 import model.Obstacle;
 
 public class TextView extends JPanel implements Observer {
@@ -81,6 +82,11 @@ public class TextView extends JPanel implements Observer {
 		textView.setText(buildMap());
 		
 		GameMessage gm = (GameMessage) gameMessage;
+		
+		if(gm.getGameOverReason() == GameOverReason.Reset) {
+			gridSize = ((Game) game).getGridSize();
+			textView.setFont(new Font(Font.MONOSPACED, Font.PLAIN, getFontSize()));
+		}
 		
 		Obstacle obstacle = gm.getObstacle();
 		switch(obstacle) {

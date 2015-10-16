@@ -1,5 +1,5 @@
 package model;
 
 public enum GameOverReason {
-	ArrowHitWumpus, Pit, Wumpus, ArrowHitHunter, Default;
+	ArrowHitWumpus, Pit, Wumpus, ArrowHitHunter, Default, Reset;
 }
