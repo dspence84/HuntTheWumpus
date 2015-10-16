@@ -32,7 +32,7 @@ import model.Obstacle;
 
 public class WumpusGUI extends JFrame implements Observer {
 	
-	private final int GRID_SIZE = 30;
+	private final int GRID_SIZE = 20;
 	private boolean[][] visited;
 	private Game game;	
 	private JTabbedPane tabPane;
