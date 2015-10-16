@@ -49,7 +49,7 @@ public class ImageView extends JPanel implements Observer {
 		}
 		
 		gridSize = game.getGridSize();
-		panelSizeInPixels = 600;
+		panelSizeInPixels = 400;
 		this.setBackground(Color.BLACK);
 		
 		
