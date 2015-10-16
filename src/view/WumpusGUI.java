@@ -44,6 +44,8 @@ public class WumpusGUI extends JFrame implements Observer {
 	private TextView textPanel;	
 	private ImageView imagePanel;
 	
+	private JLabel statusLabel;
+	
 	public static void main(String[] args) {
 		new WumpusGUI().setVisible(true);
 	}
@@ -80,6 +82,11 @@ public class WumpusGUI extends JFrame implements Observer {
 		this.setSize(800,600);
 		this.setLocation(50,50);
 
+		
+		statusLabel = new JLabel();
+		statusLabel.setLocation(15, 500);
+		statusLabel.setSize(100, 20);
+		add(statusLabel);
 		/*
 		TextView textPanel = new TextView(game);	
 		ImageView imagePanel = new ImageView(game);
@@ -206,6 +213,21 @@ public class WumpusGUI extends JFrame implements Observer {
 	@Override
 	public void update(Observable game, Object gameMessage) {
 		GameMessage gm = (GameMessage) gameMessage;
+		
+		Obstacle obstacle = gm.getObstacle();
+		switch(obstacle) {
+		case Blood:
+			statusLabel.setText("You smell something foul!");
+			break;
+		case Slime:
+			statusLabel.setText("You feel a draft.");
+			break;
+		case Goop:
+			statusLabel.setText("You smell something foul and feel a draft.");
+		default:
+			statusLabel.setText("");
+			break;
+		}
 		
 		if(gm.getGameOver() == true) {
 			switch(gm.getGameOverReason()) {
