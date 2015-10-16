@@ -90,6 +90,10 @@ public class Game extends Observable {
 	
 	public boolean shootArrow(Direction direction) {
 		
+		if(gameOver) {
+			return false;
+		}
+		
 		int playerX = newPlayerPosition.x;
 		int playerY = newPlayerPosition.y;
 		boolean win = false;
@@ -154,7 +158,9 @@ public class Game extends Observable {
 		case Pit:
 			reason = GameOverReason.Pit;
 			gameOver = true;
-			break;			
+			break;		
+		default:
+			break;
 		}
 		
 		if(gameOver == true) {
