@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -48,7 +49,8 @@ public class ImageView extends JPanel implements Observer {
 		}
 		
 		gridSize = game.getGridSize();
-		panelSizeInPixels = 320;
+		panelSizeInPixels = 350;
+		this.setBackground(Color.BLACK);
 		
 		
 		repaint();
@@ -62,19 +64,26 @@ public class ImageView extends JPanel implements Observer {
 		boolean[][] visited = game.getVisited();
 		
 		// Draw background image 100 times
-		for (int y = panelSizeInPixels - 1; y >= 0; y -= gridSquareSizeInPixels())
+		for (int y = 0; y < panelSizeInPixels; y += gridSquareSizeInPixels())
 			for (int x = 0; x < panelSizeInPixels; x += gridSquareSizeInPixels()) {
-				//if(visited[pixelToGrid(x)][pixelToGrid(y)] == true)	
-					g2.drawImage(tile,  x, y, gridSquareSizeInPixels(), gridSquareSizeInPixels(), null);
-					g2.drawImage(whichImage(pixelToGrid(x), pixelToGrid(y)), x, y, gridSquareSizeInPixels(), gridSquareSizeInPixels(), null);
+				if(visited[pixelToGrid(x)][pixelToGrid(y)] == true) {	
+					g2.drawImage(tile,  x + 25, y, gridSquareSizeInPixels(), gridSquareSizeInPixels(), null);
+					g2.drawImage(whichImage(pixelToGrid(x), pixelToGrid(y)), x + 25, y, gridSquareSizeInPixels(), gridSquareSizeInPixels(), null);
+				}
 			}
 
 		//System.out.println(X + " " + Y);
-		//g2.drawImage(player, playerPosition.x, playerPosition.y, null);
+		g2.drawImage(player, gridToPixel(playerPosition.x) + 25, gridToPixel(playerPosition.y), gridSquareSizeInPixels(), gridSquareSizeInPixels(), null);
 	}
 	
 	private int gridSquareSizeInPixels() {
-		return (int) Math.ceil( (double) panelSizeInPixels / gridSize);
+		return (int) Math.ceil( (double) panelSizeInPixels / gridSize );
+	}
+	
+	private int gridToPixel(int x) {
+		x /= gridSquareSizeInPixels();
+		
+		return x;
 	}
 	
 	private int pixelToGrid(int pixel) {
