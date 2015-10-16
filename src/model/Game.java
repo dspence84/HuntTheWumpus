@@ -67,6 +67,17 @@ public class Game extends Observable {
 		}
 		
 	}
+	
+	public void resetGame(int gridSize, GameMap map, boolean[][] visited, Point hunterStartingPosition) {
+		this.gridSize = gridSize;
+		this.map = map;
+		this.visited = visited;
+		this.newPlayerPosition = hunterStartingPosition;
+		
+		visited[hunterStartingPosition.x][hunterStartingPosition.y] = true;
+		gameOver = false;
+		
+	}
 
 	public Point getPlayerPosition() {
 		return newPlayerPosition;

@@ -29,6 +29,10 @@ public class GameMapFactory {
 		theMap = map;		
 	}
 	
+	public int getGridSize() {
+		return gridSize;
+	}
+	
 	public Point getHunterPosition() {
 		return hunter;
 	}
