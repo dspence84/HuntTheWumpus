@@ -26,7 +26,7 @@ import model.Obstacle;
 
 public class WumpusGUI extends JFrame implements Observer {
 	
-	private final int GRID_SIZE = 10;
+	private final int GRID_SIZE = 30;
 	private boolean[][] visited;
 	private Game game;
 	private TextView textPanel;
@@ -65,6 +65,7 @@ public class WumpusGUI extends JFrame implements Observer {
 		
 		
 		ImageView imagePanel = new ImageView(game);
+		imagePanel.setSize(600,600);
 		
 		game.addObserver(this);
 		game.addObserver(textPanel);

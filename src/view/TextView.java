@@ -22,7 +22,7 @@ public class TextView extends JPanel implements Observer {
 	private Game game;
 	private String gameString;
 	private int gridSize;
-	private final double FONT_RATIO = (21.5 * 10.0);
+	private final double FONT_RATIO = (37 * 10.0);
 	
 	public TextView(Game game) {		
 		this.game = game;
