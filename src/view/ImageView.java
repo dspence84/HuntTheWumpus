@@ -199,8 +199,10 @@ public class ImageView extends JPanel implements Observer {
 			gridSize = ((Game) game).getGridSize();
 		}
 		
-		
-		drawWithAnimation(gm.getDirection());
+		if(gm.getDirection() != Direction.None)
+			drawWithAnimation(gm.getDirection());
+		else
+			repaint();
 		
 	}
 

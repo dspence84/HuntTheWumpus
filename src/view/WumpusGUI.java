@@ -245,7 +245,7 @@ public class WumpusGUI extends JFrame implements Observer {
 			statusLabel.setText("You feel a draft.");
 			break;
 		case Goop:
-			statusLabel.setText("You smell something foul and feel a draft.");
+			statusLabel.setText("You smell something");
 		default:
 			statusLabel.setText("");
 			break;
