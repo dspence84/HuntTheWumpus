@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
@@ -12,7 +14,9 @@ import java.util.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
+import model.Direction;
 import model.Game;
 import model.GameMessage;
 import model.GameOverReason;
@@ -31,11 +35,21 @@ public class ImageView extends JPanel implements Observer {
 	private int gridSize;
 	private int panelSizeInPixels;
 	
+	private int X;
+	private int Y;
+	private int tic;
+	private int tics = 25;
+	private Direction direction;
+	
+	private Timer animationTimer;
+	
 	private Game game;
 	
 	public ImageView(Game game) {
 		
 		this.game = game;
+		
+		
 		
 		try {
 			player = ImageIO.read(new File("./images/TheHunter.png"));
@@ -54,14 +68,69 @@ public class ImageView extends JPanel implements Observer {
 		panelSizeInPixels = 400;
 		this.setBackground(Color.BLACK);
 		
+		X = gridToPixel(game.getPlayerPosition().x) + 50;
+		Y = panelSizeInPixels - gridToPixel(game.getPlayerPosition().y);
+		
+		tic = 0;
+		animationTimer = new Timer(20, new AnimationTimerListener());
 		
 		repaint();
+	}
+	
+	private class AnimationTimerListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			if(tic > tics) {
+				animationTimer.stop();
+				X = gridToPixel(game.getPlayerPosition().x) + 50;
+				Y = panelSizeInPixels - gridToPixel(game.getPlayerPosition().y);
+				tic = 0;
+				
+			} else {
+			
+				tic++;
+				
+				switch(direction) {
+				case North:
+					Y -= gridSquareSizeInPixels() / (double) tics;
+					break;
+				case South:
+					Y += gridSquareSizeInPixels() / (double) tics;
+					break;
+				case East:
+					X += gridSquareSizeInPixels() / (double) tics;
+					break;
+				case West:
+					X -= gridSquareSizeInPixels() / (double) tics;
+					break;
+				default:
+					break;
+
+			}
+						
+			}
+			
+			repaint();
+		
+		}
+	}
+	
+	private void drawWithAnimation(Direction direction) {
+		
+		X = gridToPixel(game.getPlayerPositionLast().x) + 50;
+		Y = panelSizeInPixels - gridToPixel(game.getPlayerPositionLast().y);
+		this.direction = direction;
+		
+		animationTimer.start();
+		
+		
 	}
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		Point playerPosition = game.getPlayerPosition();
+		
 		
 		boolean[][] visited = game.getVisited();
 		
@@ -75,7 +144,7 @@ public class ImageView extends JPanel implements Observer {
 			}
 
 		//System.out.println(X + " " + Y);
-		g2.drawImage(player, gridToPixel(playerPosition.x) + 50, panelSizeInPixels - gridToPixel(playerPosition.y) , 
+		g2.drawImage(player, X, Y , 
 				gridSquareSizeInPixels(), gridSquareSizeInPixels(), null);
 	}
 	
@@ -129,7 +198,9 @@ public class ImageView extends JPanel implements Observer {
 		if(gm.getGameOverReason() == GameOverReason.Reset) {
 			gridSize = ((Game) game).getGridSize();
 		}
-		repaint();
+		
+		
+		drawWithAnimation(gm.getDirection());
 		
 	}
 

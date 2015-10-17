@@ -18,6 +18,7 @@ public class Game extends Observable {
 		this.map = map;
 		this.visited = visited;
 		this.newPlayerPosition = hunterStartingPosition;
+		this.oldPlayerPosition = hunterStartingPosition;
 		
 		visited[hunterStartingPosition.x][hunterStartingPosition.y] = true;
 		gameOver = false;
@@ -63,7 +64,7 @@ public class Game extends Observable {
 			
 			visited[newPlayerPosition.x][newPlayerPosition.y] = true;
 			
-			checkRules();
+			checkRules(direction);
 		}
 		
 	}
@@ -77,7 +78,7 @@ public class Game extends Observable {
 		visited[hunterStartingPosition.x][hunterStartingPosition.y] = true;
 		gameOver = false;
 		
-		GameMessage gm = new GameMessage(Obstacle.Empty, this.gameOver, GameOverReason.Reset);
+		GameMessage gm = new GameMessage(Obstacle.Empty, this.gameOver, GameOverReason.Reset, Direction.None);
 		setChanged();
 		notifyObservers(gm);
 		
@@ -86,6 +87,10 @@ public class Game extends Observable {
 
 	public Point getPlayerPosition() {
 		return newPlayerPosition;
+	}
+	
+	public Point getPlayerPositionLast() {
+		return oldPlayerPosition;
 	}
 	
 	public boolean shootArrow(Direction direction) {
@@ -127,7 +132,7 @@ public class Game extends Observable {
 		}
 		gameOver = true;
 		
-		checkRules();
+		checkRules(direction);
 		return win;
 	}		
 	
@@ -147,7 +152,7 @@ public class Game extends Observable {
 		}
 	}
 	
-	private void checkRules() {
+	private void checkRules(Direction direction) {
 		Obstacle obstacle = map.whatIsHere(newPlayerPosition);
 		
 		switch(obstacle) {
@@ -167,7 +172,7 @@ public class Game extends Observable {
 			visitAll();
 		}
 		
-		GameMessage gm = new GameMessage(obstacle, this.gameOver, reason);
+		GameMessage gm = new GameMessage(obstacle, this.gameOver, reason, direction);
 		setChanged();
 		notifyObservers(gm);
 	}
