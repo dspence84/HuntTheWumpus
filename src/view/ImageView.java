@@ -38,7 +38,7 @@ public class ImageView extends JPanel implements Observer {
 	private int X;
 	private int Y;
 	private int tic;
-	private int tics = 25;
+	private int tics = 20;
 	private Direction direction;
 	
 	private Timer animationTimer;
@@ -48,9 +48,7 @@ public class ImageView extends JPanel implements Observer {
 	public ImageView(Game game) {
 		
 		this.game = game;
-		
-		
-		
+
 		try {
 			player = ImageIO.read(new File("./images/TheHunter.png"));
 			tile = ImageIO.read(new File("./images/Ground.png"));
@@ -85,6 +83,7 @@ public class ImageView extends JPanel implements Observer {
 				animationTimer.stop();
 				X = gridToPixel(game.getPlayerPosition().x) + 50;
 				Y = panelSizeInPixels - gridToPixel(game.getPlayerPosition().y);
+				direction = Direction.None;
 				tic = 0;
 				
 			} else {
@@ -93,24 +92,23 @@ public class ImageView extends JPanel implements Observer {
 				
 				switch(direction) {
 				case North:
-					Y -= gridSquareSizeInPixels() / (double) tics;
+					Y -= gridSquareSizeInPixels() / tics;
 					break;
 				case South:
-					Y += gridSquareSizeInPixels() / (double) tics;
+					Y += gridSquareSizeInPixels() / tics;
 					break;
 				case East:
-					X += gridSquareSizeInPixels() / (double) tics;
+					X += gridSquareSizeInPixels() / tics;
 					break;
 				case West:
-					X -= gridSquareSizeInPixels() / (double) tics;
+					X -= gridSquareSizeInPixels() / tics;
 					break;
 				default:
 					break;
 
+				}					
 			}
-						
-			}
-			
+
 			repaint();
 		
 		}
@@ -197,6 +195,8 @@ public class ImageView extends JPanel implements Observer {
 		GameMessage gm = (GameMessage) gameMessage;
 		if(gm.getGameOverReason() == GameOverReason.Reset) {
 			gridSize = ((Game) game).getGridSize();
+			X = gridToPixel( ((Game) game).getPlayerPosition().x) + 50;
+			Y = panelSizeInPixels - gridToPixel( ((Game) game).getPlayerPosition().y);
 		}
 		
 		if(gm.getDirection() != Direction.None)
