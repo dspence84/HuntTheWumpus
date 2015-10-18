@@ -106,11 +106,9 @@ public class ImageView extends JPanel implements Observer {
 				default:
 					break;
 
+				}					
 			}
-			
-						
-			}
-			
+
 			repaint();
 		
 		}
