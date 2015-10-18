@@ -124,6 +124,8 @@ public class Game extends Observable {
 				}
 			}
 		break;
+		default:
+			break;
 			
 		}
 		
@@ -191,6 +193,11 @@ public class Game extends Observable {
 		}
 
 		return p;
+	}
+
+	public boolean getGameOver() {
+		// TODO Auto-generated method stub
+		return gameOver;
 	}
 }
 

@@ -20,7 +20,7 @@ public class GameMapFactoryTest {
 		return new GameMapFactory(new Obstacle[GRID_SIZE][GRID_SIZE], new Random(), GRID_SIZE, lbPits, ubPits);
 	}
 	
-	@Test
+	@Test 
 	public void testFillEmpty() {		
 		GameMapFactory mf = instantiateMF();
 		mf.fillEmpty();
