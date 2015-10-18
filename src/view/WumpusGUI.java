@@ -79,8 +79,8 @@ public class WumpusGUI extends JFrame implements Observer {
 			ubPits = 12;
 		} else if(hard.isSelected()) {
 			GRID_SIZE = 20;
-			lbPits = 30;
-			ubPits = 35;
+			lbPits = 35;
+			ubPits = 45;
 		} else {
 			GRID_SIZE = 10;
 			lbPits = 3;
@@ -246,6 +246,7 @@ public class WumpusGUI extends JFrame implements Observer {
 			break;
 		case Goop:
 			statusLabel.setText("You smell something");
+			break;
 		default:
 			statusLabel.setText("");
 			break;
@@ -256,18 +257,22 @@ public class WumpusGUI extends JFrame implements Observer {
 				case Wumpus:
 					JOptionPane.showMessageDialog(null, "While you ponder over whether it was a good idea to go"
 							+ " toe to toe with the Wumpus or not, The Wumpus is busy tearing your head off!");
+					statusLabel.setText("Wumpus bit your head off!");
 					break;
 				case Pit:
 					JOptionPane.showMessageDialog(null,  "You fall to your doom in a surprisingly deep pit.");
+					statusLabel.setText("Fell down a pit!");
 					break;
 					
 				case ArrowHitWumpus:
 					JOptionPane.showMessageDialog(null, "Your arrow flies true and hits the Wumpus right between the eyes."
 							+ "He falls over dead and the day is done.  Congratulations!");
+					statusLabel.setText("The Wumpus is dead!");
 					break;
 					
 				case ArrowHitHunter:
 					JOptionPane.showMessageDialog(null, "You completely miss the Wumpus hitting yourself in the back of head!");
+					statusLabel.setText("Arrow in the back of your head!");
 					break;
 					
 			default:

@@ -83,6 +83,7 @@ public class ImageView extends JPanel implements Observer {
 				animationTimer.stop();
 				X = gridToPixel(game.getPlayerPosition().x) + 50;
 				Y = panelSizeInPixels - gridToPixel(game.getPlayerPosition().y);
+				direction = Direction.None;
 				tic = 0;
 				
 			} else {
@@ -106,6 +107,7 @@ public class ImageView extends JPanel implements Observer {
 					break;
 
 			}
+			
 						
 			}
 			
