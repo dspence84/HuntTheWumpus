@@ -5,7 +5,7 @@
  */
 
 package view;
-
+ 
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.TextArea;
@@ -36,6 +36,7 @@ import model.GameMessage;
 import model.GameOverReason;
 import model.Obstacle;
 
+@SuppressWarnings({ "serial", "unused" })
 public class WumpusGUI extends JFrame implements Observer {
 	
 	private int GRID_SIZE = 10;
@@ -53,11 +54,16 @@ public class WumpusGUI extends JFrame implements Observer {
 	private ImageView imagePanel;
 	
 	private JLabel statusLabel;
-	
+	/*-----------------------------
+	 * Main method for HuntTheWumpus
+	 *-----------------------------*/
 	public static void main(String[] args) {
 		new WumpusGUI().setVisible(true);
 	}
 	
+	/**
+	 * constructor
+	 */
 	public WumpusGUI() {
 
 		visited = new boolean[GRID_SIZE][GRID_SIZE];
@@ -66,13 +72,19 @@ public class WumpusGUI extends JFrame implements Observer {
 		mf.setupMap();
 		game = new Game(GRID_SIZE, mf.getGameMap(), visited, mf.getHunterPosition());
 		layoutGUI();
-		//resetGame();
 		registerListeners();
 		
 
 		
 	}
 	
+	/**
+	 * Method: resetGame
+	 * resets teh game when player chooses
+	 * 
+	 * @param none
+	 * @return none
+	 */
 	private void resetGame() {
 		
 		if(easy.isSelected()) {
@@ -101,7 +113,12 @@ public class WumpusGUI extends JFrame implements Observer {
 		game.resetGame(GRID_SIZE, mf.getGameMap(), visited, mf.getHunterPosition());
 		
 	}
-	
+	/**
+	 * Method layoutGUI
+	 * lays out the GUI adds observers and allows game to be playable
+	 * @param none
+	 * @return none
+	 */
 	public void layoutGUI() {
 		
 		setLayout(null);
@@ -189,7 +206,9 @@ public class WumpusGUI extends JFrame implements Observer {
 		add(tabPane);
 		
 	}
-	
+	/*------------------------------------
+	 * Registering Listeners
+	 *------------------------------------*/
 	public void registerListeners() {
 		this.addKeyListener(new ArrowKeyListener());
 	}
@@ -239,6 +258,15 @@ public class WumpusGUI extends JFrame implements Observer {
 		
 	}
 
+	/**
+	 * Method: update
+	 * updates the observables
+	 * @param game
+	 * 			Observable
+	 * @param	gameMessage
+	 * 			Object
+	 * @return none
+	 */
 	@Override
 	public void update(Observable game, Object gameMessage) {
 		GameMessage gm = (GameMessage) gameMessage;

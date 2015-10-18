@@ -1,7 +1,7 @@
 /*Daniel Spence
  * Joshua Adams
  * 
- * creates and specified a game map
+ * creates and specifies a game map
  */
 
 package model;
@@ -22,6 +22,7 @@ public class GameMapFactory {
 	private Point hunter;
 
 	/**
+	 * Method: GameMapFactor
 	 * Creates a new game map
 	 * 
 	 * @param gridSize
@@ -30,6 +31,7 @@ public class GameMapFactory {
 	 *            lower bound to the random number of pits
 	 * @param upperBoundPits
 	 *            upper bound to the random number of pits
+	 * Returns: none
 	 */
 	public GameMapFactory(Obstacle[][] map, Random r, int gridSize, int lowerBoundPits, int upperBoundPits) {
 		this.r = r;
@@ -39,40 +41,55 @@ public class GameMapFactory {
 		theMap = map;		
 	}
 	
+	
 	/**
+	 * GETTER
+	 * Method: getGridSize
 	 * returns the grid size of the map being created
-	 * @return
+	 * @return gridSize(int)
 	 */
 	public int getGridSize() {
 		return gridSize;
 	}
 	
 	/**
+	 * GETTER
+	 * Method: getHunterPosition
 	 * returns the hunter position if one is placed
-	 * @return
+	 * @return hunter
+	 * 			a Point
 	 */
 	public Point getHunterPosition() {
 		return hunter;
 	}
 	/**
+	 * GETTER
+	 * Method: getMap
 	 * return the actual Obstacle map
-	 * @return
+	 * @return theMap(Obstacle)
 	 */
 	public Obstacle[][] getMap() {
 		return theMap;
 	}
 
 	/**
-	 * returns a game map object of the map that is being created
-	 * @return
+	 * GETTER
+	 * Method: getGameMap
+	 * @param none
+	 * @return GameMap
+	 * 			a game map object of the map that is being created
 	 */
 	public GameMap getGameMap() {
 		return new GameMap(theMap);
 	}
 	
 	/**
+	 * SETTER
+	 * Method: setupMap
 	 * runs all the algorithms needed for creating a game map according to the rules specified
-	 * @return
+	 * @param none
+	 * @return theMap
+	 * 			an Obstacle[][]
 	 */
 	public Obstacle[][] setupMap() {
 		// first fill the map with empty spaces
@@ -94,7 +111,10 @@ public class GameMapFactory {
 	}
 	
 	/**
+	 * Method: fillEmpty
 	 * fill a map with empty squares
+	 * @param none
+	 * @return none
 	 */
 	public void fillEmpty() {
 		for (int x = 0; x < gridSize; x++) {
@@ -105,8 +125,17 @@ public class GameMapFactory {
 	}
 
 	/**
+	 * Method: calculateWrap
 	 * the purpose is to add an x and y to a point on the map and calculate the
 	 * wrap around for you
+	 * @param point
+	 * 			A Point
+	 * @param plusX
+	 * 			an int
+	 * @param plusY
+	 * 			an int
+	 * @return p
+	 * 			a Point
 	 */	
 	public Point calculateWrap(Point point, int plusX, int plusY) {
 		Point p = new Point(point.x, point.y);
@@ -124,9 +153,11 @@ public class GameMapFactory {
 		return p;
 	}
 
-	/**
+	/**Method: getUniquePoint
 	 * gets a unique point on a current map, one that is not occupied by anything
-	 * @return
+	 * @param none
+	 * @return p 
+	 * 			a Point
 	 */
 	public Point getUniquePoint() {
 		Point p = new Point();
@@ -141,8 +172,12 @@ public class GameMapFactory {
 	}
 
 	/**
+	 * Method: placePits
+	 * 
 	 * places pits according to specified rules
-	 * @return
+	 * @param none
+	 * @return pits
+	 * 			Point[]
 	 */
 	public Point[] placePits() {
 		int numPits = generateRandom(lowerBoundPits, upperBoundPits);
@@ -156,8 +191,11 @@ public class GameMapFactory {
 	}
 
 	/**
+	 * Method: placeSlimes
 	 * places the slimes according to specified rules
 	 * @param pits
+	 * 			a Point[]
+	 * @return none
 	 */
 	public void placeSlimes(Point[] pits) {
 		for (Point pit : pits) {
@@ -186,17 +224,21 @@ public class GameMapFactory {
 	}
 
 	/**
+	 * Method: whatIsHere
 	 * determines what is at a specific point on the map
 	 * @param p the point object that specified where on the map
-	 * @return
+	 * @return theMap
+	 * 			Obstacle[][]
 	 */
 	public Obstacle whatIsHere(Point p) {
 		return theMap[p.x][p.y];
 	}
 
 	/**
+	 * Method: placeWumpusAndBlood
 	 * places the wumpus at a unique location and places his corrosponding blood
-	 * @return
+	 * @return wumpus
+	 * 			Point
 	 */
 	public Point placeWumpusAndBlood() {
 		Point wumpus = getUniquePoint();
@@ -222,7 +264,10 @@ public class GameMapFactory {
 	}
 
 	/**
+	 * Method: printMap
 	 * a debug function to print the map
+	 * @param none
+	 * @return none
 	 */
 	public void printMap() {
 		for (int y = 0; y < gridSize; y++) {
@@ -234,8 +279,10 @@ public class GameMapFactory {
 	}
 
 	/**
+	 * Method: placeBlood
 	 * places a blood square at the given point
 	 * @param blood a point object that specifies where to place the blood
+	 * @return none
 	 */
 	public void placeBlood(Point blood) {
 		if (whatIsHere(blood) == Obstacle.Empty) {
@@ -246,9 +293,12 @@ public class GameMapFactory {
 	}
 
 	/**
+	 * Method: placeHunter
 	 * places the hunter at a unique location, sets the hunter point field,
 	 * get that with getHunterPosition()
-	 * @return the point where the hunter was placed
+	 * @param none
+	 * @return hunter 
+	 * 			the Point where the hunter was placed
 	 */
 	public Point placeHunter() {
 		Point hunter = getUniquePoint();
@@ -260,10 +310,14 @@ public class GameMapFactory {
 	}
 	
 	/**
+	 * Method: generateRandom
 	 * generates a random int between lowerBound and upperBound
 	 * @param lowerBound
+	 * 			int
 	 * @param upperBound
-	 * @return
+	 * 			int
+	 * @return r
+	 * 			int
 	 */
 	public int generateRandom(int lowerBound, int upperBound) {
 		return r.nextInt(upperBound - lowerBound + 1) + lowerBound;		

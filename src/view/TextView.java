@@ -23,14 +23,18 @@ import model.GameMessage;
 import model.GameOverReason;
 import model.Obstacle;
 
+@SuppressWarnings({ "unused", "serial" })
 public class TextView extends JPanel implements Observer {
 	
 	private JTextArea textView;
-	private Game game;
+	private Game game; 
 	private String gameString;
 	private int gridSize;
 	private final double FONT_RATIO = (25 * 10.0);
 	
+	/*----------------------
+	 * constructor
+	 *----------------------*/
 	public TextView(Game game) {		
 		this.game = game;
 		gridSize = game.getGridSize();
@@ -43,11 +47,20 @@ public class TextView extends JPanel implements Observer {
 		textView.setFont(new Font(Font.MONOSPACED, Font.PLAIN, getFontSize()));
 		textView.setText(buildMap());
 	}
+	/*-----------------------------
+	 * Getter
+	 *----------------------------*/
 	
 	private int getFontSize() {
 		return (int) (FONT_RATIO / gridSize); 
 	}
 	
+	/**
+	 * Method: paintComponent
+	 * @param g
+	 * 			Graphics
+	 * @return none
+	 */
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -56,6 +69,13 @@ public class TextView extends JPanel implements Observer {
 		
 	}
 	
+	/**
+	 * Method: buildMap
+	 * builds the map in a string format
+	 * @param none
+	 * @return toString()
+	 * 			String
+	 */
 	private String buildMap() {
 		StringBuilder sb = new StringBuilder();
 		Point playerPosition = game.getPlayerPosition();
@@ -82,6 +102,14 @@ public class TextView extends JPanel implements Observer {
 		return sb.toString();
 	}
 	
+	/**
+	 * Method: update
+	 * @param	game
+	 * 			Observable
+	 * @param	gameMessage
+	 * 			Object
+	 * @return none
+	 */
 	@Override
 	public void update(Observable game, Object gameMessage) {		
 		

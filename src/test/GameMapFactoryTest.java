@@ -33,7 +33,7 @@ public class GameMapFactoryTest {
 		mf.fillEmpty();
 
 		Obstacle[][] map = mf.getMap();
-		for (int x = 0; x < GRID_SIZE; x++) {
+		for (int x = 0; x < GRID_SIZE; x++) { 
 			for (int y = 0; y < GRID_SIZE; y++) {
 				assertTrue(map[x][y] == Obstacle.Empty);
 			}
@@ -230,6 +230,7 @@ public class GameMapFactoryTest {
 		// print is a debug function, but I wanted to make sure it got covered anyways
 		GameMapFactory mf = instantiateMF();
 		
+		@SuppressWarnings("unused")
 		Obstacle[][] map = mf.setupMap();
 		mf.printMap();
 	}

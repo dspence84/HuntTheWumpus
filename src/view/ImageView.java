@@ -28,6 +28,7 @@ import model.GameMessage;
 import model.GameOverReason;
 import model.Obstacle;
 
+@SuppressWarnings("serial")
 public class ImageView extends JPanel implements Observer {
 
 	private Image tile;
@@ -44,17 +45,27 @@ public class ImageView extends JPanel implements Observer {
 	private int X;
 	private int Y;
 	private int tic;
-	private int tics = 20;
+	private int tics = 20; 
 	private Direction direction;
 	
 	private Timer animationTimer;
 	
 	private Game game;
 	
+	
+	/**
+	 * Method: ImageView
+	 * the image view set up for HuntTheWumpus
+	 * 
+	 * @param game
+	 * 			A Game
+	 * @return none
+	 */
 	public ImageView(Game game) {
 		
 		this.game = game;
 
+		//try catch for image files
 		try {
 			player = ImageIO.read(new File("./images/TheHunter.png"));
 			tile = ImageIO.read(new File("./images/Ground.png"));
@@ -81,8 +92,18 @@ public class ImageView extends JPanel implements Observer {
 		repaint();
 	}
 	
+	/**
+	 * timer listener for animation
+	 *
+	 */
 	private class AnimationTimerListener implements ActionListener {
 
+		/**
+		 * Method: actionPerformed
+		 * @param arg0
+		 *        ActionEvent
+		 * @return none
+		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if(tic > tics || (game.arrowShot() == true)) {
@@ -120,6 +141,12 @@ public class ImageView extends JPanel implements Observer {
 		}
 	}
 	
+	/**
+	 * Method: drawWithAnimation
+	 * @param direction
+	 * 			a Direction
+	 * @return none
+	 */
 	private void drawWithAnimation(Direction direction) {
 		
 		X = gridToPixel(game.getPlayerPositionLast().x) + 50;
@@ -131,6 +158,12 @@ public class ImageView extends JPanel implements Observer {
 		
 	}
 	
+	/**
+	 * Method paintComponent
+	 * @param g
+	 *        Graphics
+	 * @return none
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
@@ -147,23 +180,50 @@ public class ImageView extends JPanel implements Observer {
 				}
 			}
 
-		//System.out.println(X + " " + Y);
+		
 		g2.drawImage(player, X, Y , 
 				gridSquareSizeInPixels(), gridSquareSizeInPixels(), null);
 	}
 	
+	/**
+	 * 
+	 * @return int
+	 * @param none
+	 */
 	private int gridSquareSizeInPixels() {
 		return (int) Math.ceil( (double) panelSizeInPixels / gridSize );
 	}
 	
+	/**
+	 * 
+	 * @param x
+	 * @return gridSquareSizeInPixels * x
+	 *        an int
+	 */
 	private int gridToPixel(int x) {
 		return gridSquareSizeInPixels() * x;
 	}
-	
+	/**
+	 * 
+	 * @param pixel
+	 *        an int
+	 * @return pixel / gridSquareSizeInPixels()
+	 *         an int
+	 * 			
+	 */
 	private int pixelToGrid(int pixel) {
 		return (pixel / gridSquareSizeInPixels());
 	}
 	
+	/**
+	 * 
+	 * @param x
+	 * 		an int
+	 * @param y
+	 * 		an int
+	 * @return image
+	 * 		an Image
+	 */
 	private Image whichImage(int x, int y) {
 		Obstacle obstacle = game.whatIsHere(new Point(x,y));		
 		Image image;
@@ -196,6 +256,15 @@ public class ImageView extends JPanel implements Observer {
 		return image;
 	}
 	
+	/**
+	 * Method: update
+	 * @param game
+	 * 			Observable
+	 * @param gameMessage
+	 * 			Object
+	 * @return none
+	 * 
+	 */
 	@Override
 	public void update(Observable game, Object gameMessage) {
 		GameMessage gm = (GameMessage) gameMessage;

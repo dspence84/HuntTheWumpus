@@ -1,5 +1,8 @@
-/*Daniel Spence
- * Joshua Adams
+/*
+ * @author  Daniel Spence
+ * 			Joshua Adams
+ * 
+ * @date 10/18/2015
  * 
  * runs the game and all of its rules
  */
@@ -30,7 +33,7 @@ public class Game extends Observable {
 	public Game(int gridSize, GameMap map, boolean[][] visited, Point hunterStartingPosition) {
 		this.gridSize = gridSize;
 		this.map = map;
-		this.visited = visited;
+		this.visited = visited; 
 		this.newPlayerPosition = hunterStartingPosition;
 		this.oldPlayerPosition = hunterStartingPosition;
 		
@@ -80,7 +83,6 @@ public class Game extends Observable {
 				plusY = 0;
 			}		
 					
-			System.out.println("moved");
 			
 			newPlayerPosition = calculateWrap(oldPlayerPosition, plusX, plusY);
 			
@@ -278,18 +280,3 @@ public class Game extends Observable {
 	}
 }
 
-
-// control everything --
-// move player
-// send messages
-// control the arrow
-
-
-// Game
-// Point newPlayerPostion
-// Point oldPlayerPosition
-// 
-//
-// movePlayer(Direction)
-// shootArrow(Direction)
-// private checkRules()  sends messages to observers

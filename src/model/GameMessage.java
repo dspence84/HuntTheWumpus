@@ -17,11 +17,13 @@ public class GameMessage {
 	private Direction direction;
 	
 	/**
+	 * Method: GameMessage
 	 * creates a new game message
 	 * @param obstacle the obstacle the player moved onto
 	 * @param gameOver the gameOver condition
 	 * @param reason the reason why a gameOver, if there was one, occured, otherwise GameOverReason.None
 	 * @param direction the direction in which a player moved
+	 * @return none
 	 */
 	public GameMessage(Obstacle obstacle, boolean gameOver, GameOverReason reason, Direction direction) {
 		this.obstacle = obstacle;
@@ -29,6 +31,11 @@ public class GameMessage {
 		this.reason = reason;
 		this.direction = direction;
 	}
+	
+	
+	/*-----------------------------------------
+	 * GETTERS
+	 * ----------------------------------------*/
 	
 	public Obstacle getObstacle() {
 		return obstacle;

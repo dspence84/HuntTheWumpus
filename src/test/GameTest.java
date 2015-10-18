@@ -479,7 +479,7 @@ public class GameTest {
 		message = new GameMessage(Obstacle.Pit, gameOver, reason, Direction.South);
 		assertEquals(true, message.getGameOver());
 		assertEquals(Direction.South, message.getDirection());
-
+ 
 	}
 
 }

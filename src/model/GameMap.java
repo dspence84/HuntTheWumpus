@@ -16,17 +16,20 @@ public class GameMap {
 	private Obstacle[][] theMap;
 	
 	/**
-	 * ctor allows a static map to be entered for testing
+	 * Method: GameMap
+	 * constructor allows a static map to be entered for testing
 	 * @param map
+	 * Returns: None
 	 */
 	public GameMap(Obstacle[][] map) {
 		this.theMap = map;
 	}
 
 	/**
+	 * Method: whatIsHere
 	 * determines what is at a specific location on the map
 	 * @param p
-	 * @return
+	 * @return Obstacle
 	 */
 	public Obstacle whatIsHere(Point p) {
 		return theMap[p.x][p.y];
