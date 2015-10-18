@@ -103,8 +103,10 @@ public class GameMapFactoryTest {
 		
 		Point wumpus = mf.placeWumpusAndBlood();
 		
+		// test the wumpus is in the correct position
 		assertEquals(Obstacle.Wumpus, mf.whatIsHere(new Point(wumpus.x, wumpus.y)));
 		
+		// test each blood positioned correctly on the map
 		assertEquals(Obstacle.Blood, mf.whatIsHere(mf.calculateWrap(wumpus, 1, 0)));
 		assertEquals(Obstacle.Blood, mf.whatIsHere(mf.calculateWrap(wumpus, 2, 0)));
 		assertEquals(Obstacle.Blood, mf.whatIsHere(mf.calculateWrap(wumpus, -1, 0)));
@@ -129,6 +131,7 @@ public class GameMapFactoryTest {
 		mf.fillEmpty();
 		mf.placeBlood(new Point(0,0));
 		
+		// simply test a blood is placed at 0,0
 		assertEquals(Obstacle.Blood, map[0][0]);
 	}
 	
