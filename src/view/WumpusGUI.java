@@ -60,7 +60,7 @@ public class WumpusGUI extends JFrame implements Observer {
 		mf.setupMap();
 		game = new Game(GRID_SIZE, mf.getGameMap(), visited, mf.getHunterPosition());
 		layoutGUI();
-		resetGame();
+		//resetGame();
 		registerListeners();
 		
 
@@ -79,8 +79,8 @@ public class WumpusGUI extends JFrame implements Observer {
 			ubPits = 12;
 		} else if(hard.isSelected()) {
 			GRID_SIZE = 20;
-			lbPits = 15;
-			ubPits = 20;
+			lbPits = 30;
+			ubPits = 35;
 		} else {
 			GRID_SIZE = 10;
 			lbPits = 3;
