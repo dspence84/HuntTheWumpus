@@ -7,6 +7,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
+import model.GameMap;
 import model.GameMapFactory;
 import model.Obstacle;
 
@@ -133,6 +134,15 @@ public class GameMapFactoryTest {
 		
 		// simply test a blood is placed at 0,0
 		assertEquals(Obstacle.Blood, map[0][0]);
+		
+		// place goop instead of blood
+		map[0][0] = Obstacle.Slime;
+		mf.placeBlood(new Point(0,0));
+		assertEquals(Obstacle.Goop, map[0][0]);
+		
+		
+		
+		
 	}
 	
 	@Test
@@ -160,16 +170,58 @@ public class GameMapFactoryTest {
 	}
 
 	@Test
-	public void testSetupMap() {
-		GameMapFactory mf = instantiateMF();
+	public void testGetHunterPosition() {
+		Random r = new Random();
+		GameMapFactory mf = new GameMapFactory(new Obstacle[GRID_SIZE][GRID_SIZE], r, GRID_SIZE, lbPits, ubPits);
+		mf.fillEmpty();
 		
-		Obstacle[][] map = mf.setupMap();
+		r.setSeed(5L);
+		mf.placeHunter();
+		r.setSeed(5L);
+		
+		int x = mf.generateRandom(0, GRID_SIZE - 1);
+		int y = mf.generateRandom(0, GRID_SIZE - 1);
+		
+		assertEquals(x, mf.getHunterPosition().x);
+		assertEquals(y, mf.getHunterPosition().y);
 		
 		
 	}
 	
 	@Test
+	public void testSetupMapAndGetGameMap() {
+		Random r = new Random();
+		r.setSeed(5L);		
+		GameMapFactory mf = new GameMapFactory(new Obstacle[GRID_SIZE][GRID_SIZE], r, GRID_SIZE, lbPits, ubPits);
+		
+		mf.setupMap();
+		Obstacle[][] map = mf.getMap();
+		GameMap gm = new GameMap(map);
+		
+		r.setSeed(5L);
+		mf = new GameMapFactory(new Obstacle[GRID_SIZE][GRID_SIZE], r, GRID_SIZE, lbPits, ubPits);
+		mf.setupMap();
+		
+		GameMap gm2 = mf.getGameMap();
+		
+		// assume both maps are the same since they were generated with the same random seed
+		for(int i = 0; i < GRID_SIZE; i++) {
+			for(int j = 0; j < GRID_SIZE; j++) {
+				assertEquals(gm.whatIsHere(new Point(i,j)), gm2.whatIsHere(new Point(i,j)));
+			}
+		}
+		
+	}
+	
+	@Test
+	public void testGetGridSize() {
+		GameMapFactory mf = instantiateMF();
+		assertEquals(GRID_SIZE, mf.getGridSize());
+	}
+	
+	@Test
 	public void testPrint() {
+		// print is a debug function, but I wanted to make sure it got covered anyways
 		GameMapFactory mf = instantiateMF();
 		
 		Obstacle[][] map = mf.setupMap();
