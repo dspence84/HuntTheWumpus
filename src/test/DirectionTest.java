@@ -1,3 +1,9 @@
+/*Daniel Spence
+ * Joshua Adams
+ * 
+ * tests the direction enum
+ */
+
 package test;
 
 import static org.junit.Assert.*;

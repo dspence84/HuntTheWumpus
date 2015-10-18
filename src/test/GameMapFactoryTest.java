@@ -1,3 +1,9 @@
+/*Daniel Spence
+ * Joshua Adams
+ * 
+ * tests all the functionality of gameMapFactory
+ */
+
 package test;
 
 import static org.junit.Assert.*;
