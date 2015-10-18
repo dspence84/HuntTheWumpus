@@ -123,18 +123,7 @@ public class TextView extends JPanel implements Observer {
 		}
 		
 		Obstacle obstacle = gm.getObstacle();
-		switch(obstacle) {
-		case Blood:
-			System.out.println("You smell something foul!");
-			break;
-		case Slime:
-			System.out.println("You feel a draft.");
-			break;
-		case Goop:
-			System.out.println("You smell something foul and feel a draft.");
-		default:
-			break;
-		}
+		
 		
 		
 	}

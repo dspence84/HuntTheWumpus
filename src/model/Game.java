@@ -271,10 +271,12 @@ public class Game extends Observable {
 		return gameOver;
 	}
 
+	//getter
 	public boolean arrowShot() {
 		return arrowShot;
 	}
 
+	//setter
 	public void setArrowShot(boolean arrowShot) {
 		this.arrowShot = arrowShot;
 	}
