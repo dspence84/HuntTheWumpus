@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 
 import java.awt.Point;
 import java.util.Random;
-
+ 
 import org.junit.Test;
 
 import model.Direction;
@@ -44,21 +44,25 @@ public class GameTest {
 		// default
 		Game game = new Game(GRID_SIZE, mf.getGameMap(), visited, hunterPosition);
 		assertTrue(game.getPlayerPosition().equals(hunterPosition));
+		assertEquals(false, game.getGameOver());
 		// move east
 		game.movePlayer(Direction.East);
 		assertFalse(game.getPlayerPosition().equals(hunterPosition));
 		hunterPosition = new Point(1, 0);
 		assertTrue(game.getPlayerPosition().equals(hunterPosition));
+		assertEquals(false, game.getGameOver());
 		// move west
 		game.movePlayer(Direction.West);
 		assertFalse(game.getPlayerPosition().equals(hunterPosition));
 		hunterPosition = new Point(0, 0);
 		assertTrue(game.getPlayerPosition().equals(hunterPosition));
+		assertEquals(false, game.getGameOver());
 		// move north
 		game.movePlayer(Direction.North);
 		assertFalse(game.getPlayerPosition().equals(hunterPosition));
 		hunterPosition = new Point(0, 1);
 		assertTrue(game.getPlayerPosition().equals(hunterPosition));
+		assertEquals(false, game.getGameOver());
 
 		// move south twice to also check y axis wrap
 		game.movePlayer(Direction.South);
@@ -66,16 +70,23 @@ public class GameTest {
 		assertFalse(game.getPlayerPosition().equals(hunterPosition));
 		hunterPosition = new Point(0, 9);
 		assertTrue(game.getPlayerPosition().equals(hunterPosition));
+		assertEquals(false, game.getGameOver());
 		// test default switch for no move
 		game.movePlayer(Direction.None);
 		assertTrue(game.getPlayerPosition().equals(hunterPosition));
+		assertEquals(false, game.getGameOver());
 		// test get last position
 		hunterPosition = new Point(0, 9);
 		game.movePlayer(Direction.North);
 		assertTrue(game.getPlayerPositionLast().equals(hunterPosition));
+		assertEquals(false, game.getGameOver());
 		// move west again to check x axis wrap
 		game.movePlayer(Direction.West);
 		assertTrue(game.getPlayerPosition().equals(new Point(9, 0)));
+		assertEquals(false, game.getGameOver());
+		//end game
+		game.shootArrow(Direction.North);
+		assertEquals(true, game.getGameOver());
 
 	}
 
@@ -94,39 +105,47 @@ public class GameTest {
 
 		// shoot arrow north then reset game
 		game.shootArrow(Direction.North);
+		assertEquals(true, game.getGameOver());
 		game.resetGame(GRID_SIZE, mf.getGameMap(), visited, hunterPosition);
 		assertTrue(game.getPlayerPosition().equals(hunterPosition));
 		// shoot arrow east then reset game
 		game.shootArrow(Direction.East);
+		assertEquals(true, game.getGameOver());
 		game.resetGame(GRID_SIZE, mf.getGameMap(), visited, hunterPosition);
 		assertTrue(game.getPlayerPosition().equals(hunterPosition));
 		// shoot arrow south then reset game
 		game.shootArrow(Direction.South);
+		assertEquals(true, game.getGameOver());
 		game.resetGame(GRID_SIZE, mf.getGameMap(), visited, hunterPosition);
 		assertTrue(game.getPlayerPosition().equals(hunterPosition));
 		// shoot arrow west then reset game
 		game.shootArrow(Direction.West);
+		assertEquals(true, game.getGameOver());
 		game.resetGame(GRID_SIZE, mf.getGameMap(), visited, hunterPosition);
 		assertTrue(game.getPlayerPosition().equals(hunterPosition));
 
 		// move player north then reset game
 		game = new Game(GRID_SIZE, mf.getGameMap(), visited, hunterPosition);
 		game.movePlayer(Direction.North);
+		assertEquals(false, game.getGameOver());
 		game.resetGame(GRID_SIZE, mf.getGameMap(), visited, hunterPosition);
 		assertTrue(game.getPlayerPosition().equals(hunterPosition));
 		// move player east then reset game
 		game = new Game(GRID_SIZE, mf.getGameMap(), visited, hunterPosition);
 		game.movePlayer(Direction.East);
+		assertEquals(false, game.getGameOver());
 		game.resetGame(GRID_SIZE, mf.getGameMap(), visited, hunterPosition);
 		assertTrue(game.getPlayerPosition().equals(hunterPosition));
 		// move player South then reset game
 		game = new Game(GRID_SIZE, mf.getGameMap(), visited, hunterPosition);
 		game.movePlayer(Direction.South);
+		assertEquals(false, game.getGameOver());
 		game.resetGame(GRID_SIZE, mf.getGameMap(), visited, hunterPosition);
 		assertTrue(game.getPlayerPosition().equals(hunterPosition));
 		// move player west then reset game
 		game = new Game(GRID_SIZE, mf.getGameMap(), visited, hunterPosition);
 		game.movePlayer(Direction.West);
+		assertEquals(false, game.getGameOver());
 		game.resetGame(GRID_SIZE, mf.getGameMap(), visited, hunterPosition);
 		assertTrue(game.getPlayerPosition().equals(hunterPosition));
 
@@ -137,8 +156,10 @@ public class GameTest {
 		GameMap map = new GameMap(obstacle);
 		game = new Game(2, map, new boolean[2][2], new Point(1, 0));
 		assertFalse(game.getGameOver() == true);
+		assertEquals(false, game.getGameOver());
 		game.movePlayer(Direction.North);
 		assertTrue(game.getGameOver() == true);
+		assertEquals(true, game.getGameOver());
 
 		// player eaten by Wumpus
 		game = new Game(GRID_SIZE, mf.getGameMap(), visited, hunterPosition);
@@ -147,14 +168,21 @@ public class GameTest {
 		map = new GameMap(obstacle);
 		game = new Game(2, map, new boolean[2][2], new Point(1, 0));
 		assertFalse(game.getGameOver() == true);
+		assertEquals(false, game.getGameOver());
 		game.movePlayer(Direction.North);
 		assertTrue(game.getGameOver() == true);
+		assertEquals(true, game.getGameOver());
 
 		// test that player cannot move when game is over
 		game.resetGame(2, map, new boolean[2][2], new Point(1, 0));
 		assertFalse(game.getGameOver() == true);
+		assertEquals(false, game.getGameOver());
 		game.movePlayer(Direction.North);
+		assertEquals(true, game.getGameOver());
 		assertFalse(game.getPlayerPosition().equals(new Point(0, 0)));
+		game.resetGame(2, map, new boolean[2][2], new Point(1, 0));
+		assertEquals(false, game.getGameOver());
+		
 
 	}
 
@@ -327,6 +355,9 @@ public class GameTest {
 
 	}
 
+	/**
+	 * test the Game messages
+	 */
 	@Test
 	public void testGameMessage() {
 		// set up
@@ -342,70 +373,86 @@ public class GameTest {
 			}
 		}
 		GameOverReason reason = GameOverReason.Pit;
-		
-		//test the obstacles
+
+		// test the obstacles
 		boolean gameOver = true;
-		GameMessage message = new GameMessage(Obstacle.Wumpus, gameOver , reason , Direction.East);
+	
+		GameMessage message = new GameMessage(Obstacle.Wumpus, gameOver, reason, Direction.East);
+		assertEquals(true, message.getGameOver());
 		assertTrue(message.getObstacle() == Obstacle.Wumpus);
 		assertFalse(message.getObstacle() == Obstacle.Blood);
-		message = new GameMessage(Obstacle.Blood, gameOver , reason , Direction.East);
+		message = new GameMessage(Obstacle.Blood, gameOver, reason, Direction.East);
+		assertEquals(true, message.getGameOver());
 		assertTrue(message.getObstacle() == Obstacle.Blood);
 		assertFalse(message.getObstacle() == Obstacle.Wumpus);
-		message = new GameMessage(Obstacle.Slime, gameOver , reason , Direction.East);
+		message = new GameMessage(Obstacle.Slime, gameOver, reason, Direction.East);
+		assertEquals(true, message.getGameOver());
 		assertTrue(message.getObstacle() == Obstacle.Slime);
 		assertFalse(message.getObstacle() == Obstacle.Blood);
-		message = new GameMessage(Obstacle.Goop, gameOver , reason , Direction.East);
+		message = new GameMessage(Obstacle.Goop, gameOver, reason, Direction.East);
+		assertEquals(true, message.getGameOver());
 		assertTrue(message.getObstacle() == Obstacle.Goop);
 		assertFalse(message.getObstacle() == Obstacle.Slime);
-		message = new GameMessage(Obstacle.Hunter, gameOver , reason , Direction.East);
+		message = new GameMessage(Obstacle.Hunter, gameOver, reason, Direction.East);
+		assertEquals(true, message.getGameOver());
 		assertTrue(message.getObstacle() == Obstacle.Hunter);
 		assertFalse(message.getObstacle() == Obstacle.Goop);
-		message = new GameMessage(Obstacle.Pit, gameOver , reason , Direction.East);
+		message = new GameMessage(Obstacle.Pit, gameOver, reason, Direction.East);
+		assertEquals(true, message.getGameOver());
 		assertTrue(message.getObstacle() == Obstacle.Pit);
 		assertFalse(message.getObstacle() == Obstacle.Hunter);
-		message = new GameMessage(Obstacle.Empty, gameOver , reason , Direction.East);
+		message = new GameMessage(Obstacle.Empty, gameOver, reason, Direction.East);
+		assertEquals(true, message.getGameOver());
 		assertTrue(message.getObstacle() == Obstacle.Empty);
 		assertFalse(message.getObstacle() == Obstacle.Pit);
-		
-		//test game over
-		message = new GameMessage(Obstacle.Slime, gameOver , reason , Direction.East);
+
+		// test game over
+		message = new GameMessage(Obstacle.Slime, gameOver, reason, Direction.East);
 		assertEquals(true, message.getGameOver());
 		gameOver = false;
-		message = new GameMessage(Obstacle.Slime, gameOver , reason , Direction.East);
+		message = new GameMessage(Obstacle.Slime, gameOver, reason, Direction.East);
 		assertEquals(false, message.getGameOver());
-		
-		//test game over reason
-		message = new GameMessage(Obstacle.Pit, gameOver , reason , Direction.East);
+
+		// test game over reason
+		gameOver = true;
+		message = new GameMessage(Obstacle.Pit, gameOver, reason, Direction.East);
+		assertEquals(true, message.getGameOver());
 		assertEquals(GameOverReason.Pit, message.getGameOverReason());
 		reason = GameOverReason.Wumpus;
-		message = new GameMessage(Obstacle.Pit, gameOver , reason , Direction.East);
+		message = new GameMessage(Obstacle.Pit, gameOver, reason, Direction.East);
+		assertEquals(true, message.getGameOver());
 		assertEquals(GameOverReason.Wumpus, message.getGameOverReason());
 		reason = GameOverReason.ArrowHitHunter;
-		message = new GameMessage(Obstacle.Pit, gameOver , reason , Direction.East);
+		message = new GameMessage(Obstacle.Pit, gameOver, reason, Direction.East);
+		assertEquals(true, message.getGameOver());
 		assertEquals(GameOverReason.ArrowHitHunter, message.getGameOverReason());
 		reason = GameOverReason.ArrowHitWumpus;
-		message = new GameMessage(Obstacle.Pit, gameOver , reason , Direction.East);
+		message = new GameMessage(Obstacle.Pit, gameOver, reason, Direction.East);
+		assertEquals(true, message.getGameOver());
 		assertEquals(GameOverReason.ArrowHitWumpus, message.getGameOverReason());
 		reason = GameOverReason.Default;
-		message = new GameMessage(Obstacle.Pit, gameOver , reason , Direction.East);
+		message = new GameMessage(Obstacle.Pit, gameOver, reason, Direction.East);
+		assertEquals(true, message.getGameOver());
 		assertEquals(GameOverReason.Default, message.getGameOverReason());
 		reason = GameOverReason.Reset;
-		message = new GameMessage(Obstacle.Pit, gameOver , reason , Direction.East);
+		message = new GameMessage(Obstacle.Pit, gameOver, reason, Direction.East);
+		assertEquals(true, message.getGameOver());
 		assertEquals(GameOverReason.Reset, message.getGameOverReason());
-		
-		//test direction
-		message = new GameMessage(Obstacle.Pit, gameOver , reason , Direction.East);
+
+		// test direction
+		message = new GameMessage(Obstacle.Pit, gameOver, reason, Direction.East);
+		assertEquals(true, message.getGameOver());
 		assertEquals(Direction.East, message.getDirection());
-		message = new GameMessage(Obstacle.Pit, gameOver , reason , Direction.West);
+		message = new GameMessage(Obstacle.Pit, gameOver, reason, Direction.West);
+		assertEquals(true, message.getGameOver());
 		assertEquals(Direction.West, message.getDirection());
-		message = new GameMessage(Obstacle.Pit, gameOver , reason , Direction.North);
+		message = new GameMessage(Obstacle.Pit, gameOver, reason, Direction.North);
+		assertEquals(true, message.getGameOver());
 		assertEquals(Direction.North, message.getDirection());
-		message = new GameMessage(Obstacle.Pit, gameOver , reason , Direction.South);
+		message = new GameMessage(Obstacle.Pit, gameOver, reason, Direction.South);
+		assertEquals(true, message.getGameOver());
 		assertEquals(Direction.South, message.getDirection());
-		
-		
-		
-		
+
 	}
 
 }
