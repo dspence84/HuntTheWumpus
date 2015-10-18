@@ -85,7 +85,7 @@ public class ImageView extends JPanel implements Observer {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if(tic > tics) {
+			if(tic > tics || (game.arrowShot() == true)) {
 				animationTimer.stop();
 				X = gridToPixel(game.getPlayerPosition().x) + 50;
 				Y = panelSizeInPixels - gridToPixel(game.getPlayerPosition().y);
@@ -94,7 +94,7 @@ public class ImageView extends JPanel implements Observer {
 				
 			} else {
 			
-				tic++;
+				tic++; 
 				
 				switch(direction) {
 				case North:

@@ -107,6 +107,7 @@ public class WumpusGUI extends JFrame implements Observer {
 		setLayout(null);
 		this.setSize(800,600);
 		this.setLocation(50,50);
+		this.setTitle("Hunt the Wumpus");
 
 		
 		statusLabel = new JLabel();

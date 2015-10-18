@@ -18,6 +18,7 @@ public class Game extends Observable {
 	private boolean[][] visited;
 	private boolean gameOver = true;
 	private GameOverReason reason = GameOverReason.Default;
+	private boolean arrowShot;
 	
 	/**
 	 * initialize a new game
@@ -102,6 +103,7 @@ public class Game extends Observable {
 		this.map = map;
 		this.visited = visited;
 		this.newPlayerPosition = hunterStartingPosition;
+		this.arrowShot = false;
 		
 		visited[hunterStartingPosition.x][hunterStartingPosition.y] = true;
 		gameOver = false;
@@ -134,7 +136,7 @@ public class Game extends Observable {
 	 * @return
 	 */
 	public boolean shootArrow(Direction direction) {
-		
+		setArrowShot(true);
 		if(gameOver) {
 			return false;
 		}
@@ -265,6 +267,14 @@ public class Game extends Observable {
 	public boolean getGameOver() {
 		// TODO Auto-generated method stub
 		return gameOver;
+	}
+
+	public boolean arrowShot() {
+		return arrowShot;
+	}
+
+	public void setArrowShot(boolean arrowShot) {
+		this.arrowShot = arrowShot;
 	}
 }
 

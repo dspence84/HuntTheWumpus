@@ -204,46 +204,73 @@ public class GameTest {
 		obstacle[1][1] = Obstacle.Wumpus;
 		GameMap map = new GameMap(obstacle);
 		Game game = new Game(2, map, new boolean[2][2], new Point(0, 0));
-		// arrow kills hunter fired north
+		// arrow kills hunter fired north 
+		assertFalse(game.arrowShot());
 		game.shootArrow(Direction.North);
+		assertTrue(game.arrowShot());
 		assertTrue(game.getGameOver() == true);
+		
 		// arrow shoots wumpus fired north
 		game.resetGame(2, map, new boolean[2][2], new Point(0, 0));
+		assertFalse(game.arrowShot());
 		game.movePlayer(Direction.East);
+		assertFalse(game.arrowShot());
 		assertTrue(game.shootArrow(Direction.North));
+		assertTrue(game.arrowShot());
 		assertTrue(game.getGameOver() == true);
 
 		// arrow shoots hunter fired east
+		game.resetGame(2, map, new boolean[2][2], new Point(0, 0));
+		assertFalse(game.arrowShot());
 		game.shootArrow(Direction.East);
+		assertTrue(game.arrowShot());
 		assertTrue(game.getGameOver() == true);
+		
 		// arrow shoots wumpus fired east
 		game.resetGame(2, map, new boolean[2][2], new Point(0, 0));
+		assertFalse(game.arrowShot());
 		game.movePlayer(Direction.North);
 		assertTrue(game.shootArrow(Direction.East));
+		assertTrue(game.arrowShot());
 		assertTrue(game.getGameOver() == true);
 
 		// arrow shoots hunter fired south
+		game.resetGame(2, map, new boolean[2][2], new Point(0, 0));
+		assertFalse(game.arrowShot());
 		game.shootArrow(Direction.South);
+		assertTrue(game.arrowShot());
 		assertTrue(game.getGameOver() == true);
+		
 		// arrow shoots wumpus fired south
 		game.resetGame(2, map, new boolean[2][2], new Point(0, 0));
+		assertFalse(game.arrowShot());
 		game.movePlayer(Direction.East);
+		assertFalse(game.arrowShot());
 		assertTrue(game.shootArrow(Direction.South));
+		assertTrue(game.arrowShot());
 		assertTrue(game.getGameOver() == true);
 
 		// arrow shoots hunter fired west
+		game.resetGame(2, map, new boolean[2][2], new Point(0, 0));
+		assertFalse(game.arrowShot());
 		game.shootArrow(Direction.West);
+		assertTrue(game.arrowShot());
 		assertTrue(game.getGameOver() == true);
+		
+		
 		// arrow shoots wumpus fired east
 		game.resetGame(2, map, new boolean[2][2], new Point(0, 0));
 		game.movePlayer(Direction.North);
+		assertFalse(game.arrowShot());
 		assertTrue(game.shootArrow(Direction.West));
+		assertTrue(game.arrowShot());
 		assertTrue(game.getGameOver() == true);
 
 		// player eaten cannot shoot arrow test
 		game.resetGame(2, map, new boolean[2][2], new Point(0, 0));
 		game.movePlayer(Direction.East);
 		game.movePlayer(Direction.North);
+		assertFalse(game.arrowShot());
 		assertTrue(game.getGameOver() == true);
 		assertFalse(game.shootArrow(Direction.North));
 
