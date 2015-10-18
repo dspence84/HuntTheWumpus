@@ -1,3 +1,9 @@
+/*Daniel Spence
+ * Joshua Adams
+ * 
+ * overseeing JFrame that contains each view and some basic game controls
+ */
+
 package view;
 
 import java.awt.Color;
@@ -245,7 +251,7 @@ public class WumpusGUI extends JFrame implements Observer {
 			statusLabel.setText("You feel a draft.");
 			break;
 		case Goop:
-			statusLabel.setText("You smell something");
+			statusLabel.setText("You smell something fould and feel a draft!");
 			break;
 		default:
 			statusLabel.setText("");

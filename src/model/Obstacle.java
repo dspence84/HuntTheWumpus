@@ -1,3 +1,9 @@
+/*Daniel Spence
+ * Joshua Adams
+ * 
+ * Holds the different obstacles possible for the game
+ */
+
 package model;
 
 public enum Obstacle {

@@ -1,3 +1,9 @@
+/*Daniel Spence
+ * Joshua Adams
+ * 
+ * gives the graphical view to the user by extending a JPanel
+ */
+
 package view;
 
 import java.awt.Color;

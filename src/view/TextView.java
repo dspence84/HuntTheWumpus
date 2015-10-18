@@ -1,3 +1,9 @@
+/*Daniel Spence
+ * Joshua Adams
+ * 
+ * gives the textview of the game model
+ */
+
 package view;
 
 import java.awt.BorderLayout;

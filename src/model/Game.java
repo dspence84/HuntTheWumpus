@@ -1,3 +1,9 @@
+/*Daniel Spence
+ * Joshua Adams
+ * 
+ * runs the game and all of its rules
+ */
+
 package model;
  
 import java.awt.Point;
@@ -13,6 +19,13 @@ public class Game extends Observable {
 	private boolean gameOver = true;
 	private GameOverReason reason = GameOverReason.Default;
 	
+	/**
+	 * initialize a new game
+	 * @param gridSize
+	 * @param map
+	 * @param visited
+	 * @param hunterStartingPosition
+	 */
 	public Game(int gridSize, GameMap map, boolean[][] visited, Point hunterStartingPosition) {
 		this.gridSize = gridSize;
 		this.map = map;
@@ -24,10 +37,18 @@ public class Game extends Observable {
 		gameOver = false;
 	}
 	
+	/**
+	 * returns the gridSize of the current game
+	 * @return
+	 */
 	public int getGridSize() {
 		return gridSize;
 	}
 	
+	/**
+	 * moves a player and determines any consequences of such
+	 * @param direction
+	 */
 	public void movePlayer(Direction direction) {
 		if(gameOver == false) {
 			
@@ -69,6 +90,13 @@ public class Game extends Observable {
 		
 	}
 	
+	/**
+	 * resets the game with a new grid size and map.
+	 * @param gridSize
+	 * @param map
+	 * @param visited
+	 * @param hunterStartingPosition
+	 */
 	public void resetGame(int gridSize, GameMap map, boolean[][] visited, Point hunterStartingPosition) {
 		this.gridSize = gridSize;
 		this.map = map;
@@ -84,15 +112,27 @@ public class Game extends Observable {
 		
 	}
 	
-
+	/**
+	 * gets the new player position if a move was performed
+	 * @return
+	 */
 	public Point getPlayerPosition() {
 		return newPlayerPosition;
 	}
 	
+	/**
+	 * gets the old player position if a move was performed
+	 * @return
+	 */
 	public Point getPlayerPositionLast() {
 		return oldPlayerPosition;
 	}
 	
+	/**
+	 * shoots an arrow and determines a hit or miss, consequence is game over
+	 * @param direction
+	 * @return
+	 */
 	public boolean shootArrow(Direction direction) {
 		
 		if(gameOver) {
@@ -138,14 +178,26 @@ public class Game extends Observable {
 		return win;
 	}		
 	
+	/**
+	 * get the squares that have been visited by the player
+	 * @return
+	 */
 	public boolean[][] getVisited() {
 		return visited;
 	}
 	
+	/**
+	 * wraps to the game map to find out what is at a grid square
+	 * @param p
+	 * @return
+	 */
 	public Obstacle whatIsHere(Point p) {
 		return map.whatIsHere(p);
 	}
 	
+	/**
+	 * simulates all squares visited in the case of a game over
+	 */
 	private void visitAll() {
 		for(int x = 0; x < gridSize; x++) {
 			for(int y = 0; y < gridSize; y++) {
@@ -154,6 +206,10 @@ public class Game extends Observable {
 		}
 	}
 	
+	/**
+	 * checks the consequences of a move or an arrow shoot
+	 * @param direction
+	 */
 	private void checkRules(Direction direction) {
 		Obstacle obstacle = map.whatIsHere(newPlayerPosition);
 		
@@ -179,6 +235,13 @@ public class Game extends Observable {
 		notifyObservers(gm);
 	}
 	
+	/**
+	 * calculates the proper wrapped position when a player moves
+	 * @param point
+	 * @param plusX
+	 * @param plusY
+	 * @return
+	 */
 	private Point calculateWrap(Point point, int plusX, int plusY) {
 		Point p = new Point(point.x, point.y);
 
@@ -195,6 +258,10 @@ public class Game extends Observable {
 		return p;
 	}
 
+	/**
+	 * gets the game over condition
+	 * @return
+	 */
 	public boolean getGameOver() {
 		// TODO Auto-generated method stub
 		return gameOver;
